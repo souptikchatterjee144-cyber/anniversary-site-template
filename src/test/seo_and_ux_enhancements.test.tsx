@@ -33,7 +33,7 @@ describe("SEO, UX, and PWA Enhancements Test Suite", () => {
       act(() => {
         render(<Index />);
       });
-      expect(document.title).toBe("Our Anniversary | A Little Something Special 💖");
+      expect(document.title).toBe("Celebration by Souptik | Free Anniversary Website Maker");
     });
 
     it("updates document title with Bengali greeting when language is bn", () => {
@@ -50,7 +50,7 @@ describe("SEO, UX, and PWA Enhancements Test Suite", () => {
       act(() => {
         render(<Index />);
       });
-      expect(document.title).toBe("Our Anniversary | A Little Something Special 💖");
+      expect(document.title).toBe("Celebration by Souptik | Free Anniversary Website Maker");
     });
 
     it("updates document title with Hindi greeting when language is hi", () => {
@@ -67,7 +67,7 @@ describe("SEO, UX, and PWA Enhancements Test Suite", () => {
       act(() => {
         render(<Index />);
       });
-      expect(document.title).toBe("Our Anniversary | A Little Something Special 💖");
+      expect(document.title).toBe("Celebration by Souptik | Free Anniversary Website Maker");
     });
 
     it("updates document title with French greeting when language is fr", () => {
@@ -84,7 +84,7 @@ describe("SEO, UX, and PWA Enhancements Test Suite", () => {
       act(() => {
         render(<Index />);
       });
-      expect(document.title).toBe("Our Anniversary | A Little Something Special 💖");
+      expect(document.title).toBe("Celebration by Souptik | Free Anniversary Website Maker");
     });
 
     it("falls back to default title when name is empty or whitespace", () => {
@@ -101,7 +101,7 @@ describe("SEO, UX, and PWA Enhancements Test Suite", () => {
       act(() => {
         render(<Index />);
       });
-      expect(document.title).toBe("Our Anniversary | A Little Something Special 💖");
+      expect(document.title).toBe("Celebration by Souptik | Free Anniversary Website Maker");
     });
   });
 
@@ -113,19 +113,13 @@ describe("SEO, UX, and PWA Enhancements Test Suite", () => {
       expect(htmlContent).toContain('<link rel="canonical" href="https://celebration-by-souptik.vercel.app/" />');
     });
 
-    it("contains OpenGraph locale and alternate language tags", () => {
-      expect(htmlContent).toContain('<meta property="og:locale" content="en_US" />');
-      expect(htmlContent).toContain('<meta property="og:locale:alternate" content="hi_IN" />');
-      expect(htmlContent).toContain('<meta property="og:locale:alternate" content="bn_BD" />');
-      expect(htmlContent).toContain('<meta property="og:locale:alternate" content="fr_FR" />');
+    it("contains consistent branded social metadata", () => {
+      expect(htmlContent).toContain('<meta property="og:site_name" content="Celebration by Souptik" />');
+      expect(htmlContent).toContain('<meta name="twitter:image:alt" content="Anniversary Website Generator Preview" />');
+      expect(htmlContent).toContain('name="google-site-verification"');
     });
 
-    it("contains Twitter creator and image alt tags", () => {
-      expect(htmlContent).toContain('<meta name="twitter:creator" content="@NSGAMMING699" />');
-      expect(htmlContent).toContain('<meta name="twitter:image:alt" content="Birthday Bloom Celebration Preview" />');
-    });
-
-    it("contains comprehensive and valid JSON-LD structured data with WebSite, WebApplication, FAQPage, HowTo, and BreadcrumbList schemas", () => {
+    it("contains comprehensive and valid JSON-LD structured data with accurate WebSite and WebApplication schemas", () => {
       const jsonLdMatch = htmlContent.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/);
       expect(jsonLdMatch).not.toBeNull();
       const rawJson = jsonLdMatch![1].trim();
@@ -138,13 +132,11 @@ describe("SEO, UX, and PWA Enhancements Test Suite", () => {
       expect(webSite).toBeDefined();
       expect(webSite.url).toBe("https://celebration-by-souptik.vercel.app/");
       expect(webSite.inLanguage).toContain("en");
-      expect(webSite.inLanguage).toContain("bn");
-      expect(webSite.inLanguage).toContain("hi");
-      expect(webSite.inLanguage).toContain("fr");
 
       const webApp = parsed["@graph"].find((item: { "@type": string }) => item["@type"] === "WebApplication");
       expect(webApp).toBeDefined();
-      expect(webApp.name).toBe("Birthday Bloom");
+      expect(webSite.name).toBe("Celebration by Souptik");
+      expect(webApp.name).toBe("Celebration by Souptik");
       expect(webApp.genre).toBe("Celebration & Entertainment");
       expect(webApp.browserRequirements).toBeDefined();
       expect(webApp.featureList.length).toBeGreaterThan(0);
@@ -152,23 +144,14 @@ describe("SEO, UX, and PWA Enhancements Test Suite", () => {
       expect(webApp.offers).toBeDefined();
       expect(webApp.author).toBeDefined();
 
-      const faqPage = parsed["@graph"].find((item: { "@type": string }) => item["@type"] === "FAQPage");
-      expect(faqPage).toBeDefined();
-      expect(Array.isArray(faqPage.mainEntity)).toBe(true);
-      expect(faqPage.mainEntity.length).toBeGreaterThanOrEqual(5);
-
-      const howTo = parsed["@graph"].find((item: { "@type": string }) => item["@type"] === "HowTo");
-      expect(howTo).toBeDefined();
-      expect(Array.isArray(howTo.step)).toBe(true);
-
-      const breadcrumbs = parsed["@graph"].find((item: { "@type": string }) => item["@type"] === "BreadcrumbList");
-      expect(breadcrumbs).toBeDefined();
+      expect(webApp.aggregateRating).toBeUndefined();
+      expect(webSite.potentialAction).toBeUndefined();
     });
 
     it("contains semantic crawlable noscript fallback", () => {
       expect(htmlContent).toContain("<noscript>");
-      expect(htmlContent).toContain("<h1>Birthday Bloom");
-      expect(htmlContent).toContain("3D Interactive Cake Cutting");
+      expect(htmlContent).toContain("<h1>Celebration by Souptik");
+      expect(htmlContent).toContain("customization studio");
     });
   });
 
@@ -182,7 +165,7 @@ describe("SEO, UX, and PWA Enhancements Test Suite", () => {
       expect(parsedManifest.background_color).toBe("#1a0515");
       expect(parsedManifest.categories).toContain("entertainment");
       expect(Array.isArray(parsedManifest.shortcuts)).toBe(true);
-      expect(parsedManifest.shortcuts.length).toBeGreaterThanOrEqual(3);
+      expect(parsedManifest.shortcuts[0].url).toBe("/create");
     });
   });
 
@@ -201,14 +184,10 @@ describe("SEO, UX, and PWA Enhancements Test Suite", () => {
     const sitemapPath = path.resolve(process.cwd(), "public/sitemap.xml");
     const sitemapContent = fs.readFileSync(sitemapPath, "utf-8");
 
-    it("sitemap.xml contains multilingual hreflang and archetypes", () => {
-      expect(sitemapContent).toContain('xmlns:xhtml="http://www.w3.org/1999/xhtml"');
-      expect(sitemapContent).toContain('hreflang="bn"');
-      expect(sitemapContent).toContain('hreflang="hi"');
-      expect(sitemapContent).toContain('hreflang="fr"');
-      expect(sitemapContent).toContain("relationship=partner");
-      expect(sitemapContent).toContain("relationship=friend");
-      expect(sitemapContent).toContain("relationship=family");
+    it("sitemap contains the canonical homepage without duplicate query URLs", () => {
+      expect(sitemapContent).toContain("<loc>https://celebration-by-souptik.vercel.app/</loc>");
+      expect(sitemapContent).not.toContain("?relationship=");
+      expect(sitemapContent).not.toContain("?template=");
     });
   });
 });

@@ -877,12 +877,9 @@ describe("Tier 1: Feature Coverage (Opaque-Box Requirement Verification)", () =>
       expect(html).toContain('property="og:url" content="https://celebration-by-souptik.vercel.app/"');
     });
 
-    it("12.3: index.html contains alternate locale tags for hi_IN, bn_BD, and fr_FR", () => {
-      const indexPath = path.join(rootDir, "index.html");
-      const html = fs.readFileSync(indexPath, "utf-8");
-      expect(html).toContain('property="og:locale:alternate" content="hi_IN"');
-      expect(html).toContain('property="og:locale:alternate" content="bn_BD"');
-      expect(html).toContain('property="og:locale:alternate" content="fr_FR"');
+    it("12.3: index.html contains the actual English locale", () => {
+      const html = fs.readFileSync(path.join(rootDir, "index.html"), "utf-8");
+      expect(html).toContain('property="og:locale" content="en_US"');
     });
 
     it("12.4: index.html contains complete Twitter Card metadata", () => {
@@ -923,8 +920,8 @@ describe("Tier 1: Feature Coverage (Opaque-Box Requirement Verification)", () =>
       const parsed = JSON.parse(jsonLdMatch![1]);
       const websiteSchema = (parsed["@graph"] as Array<{ "@type": string; name?: string; inLanguage?: string[] }>).find((s) => s["@type"] === "WebSite");
       expect(websiteSchema).toBeDefined();
-      expect(websiteSchema?.name).toBe("Birthday Bloom");
-      expect(websiteSchema?.inLanguage).toEqual(["en", "bn", "hi", "fr"]);
+      expect(websiteSchema?.name).toBe("Celebration by Souptik");
+      expect(websiteSchema?.inLanguage).toEqual(["en"]);
     });
 
     it("13.3: JSON-LD structured data contains WebApplication schema with featureList", () => {
@@ -942,8 +939,8 @@ describe("Tier 1: Feature Coverage (Opaque-Box Requirement Verification)", () =>
       const manifestPath = path.join(rootDir, "public/site.webmanifest");
       expect(fs.existsSync(manifestPath)).toBe(true);
       const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf-8"));
-      expect(manifest.name).toBe("Birthday Bloom");
-      expect(manifest.short_name).toBe("Birthday Bloom");
+      expect(manifest.name).toBe("Celebration by Souptik");
+      expect(manifest.short_name).toBe("Celebration");
       expect(manifest.display).toBe("standalone");
       expect(manifest.icons.length).toBeGreaterThanOrEqual(2);
     });

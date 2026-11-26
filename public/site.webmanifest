@@ -1,7 +1,7 @@
 {
-  "name": "Birthday Bloom",
-  "short_name": "Birthday Bloom",
-  "description": "A magical cinematic birthday celebration web application with 3D cake cutting, fireworks, and emotional storytelling.",
+  "name": "Celebration by Souptik",
+  "short_name": "Celebration",
+  "description": "Create a free personalized anniversary website with your own photos, interactive puzzles, countdowns and custom messages. Preview and download your website ZIP without coding.",
   "start_url": "/",
   "display": "standalone",
   "orientation": "any",
@@ -31,49 +31,9 @@
   ],
   "shortcuts": [
     {
-      "name": "Romantic Surprise",
-      "short_name": "Romantic",
-      "description": "Open romantic birthday celebration template",
-      "url": "/?template=romantic",
-      "icons": [
-        {
-          "src": "/icon-192x192.png?v=2",
-          "sizes": "192x192"
-        }
-      ]
-    },
-    {
-      "name": "Friend Celebration",
-      "short_name": "Friend",
-      "description": "Open energetic friend party celebration template",
-      "url": "/?relationship=friend",
-      "icons": [
-        {
-          "src": "/icon-192x192.png?v=2",
-          "sizes": "192x192"
-        }
-      ]
-    },
-    {
-      "name": "Family Celebration",
-      "short_name": "Family",
-      "description": "Open warm family birthday celebration template",
-      "url": "/?relationship=family",
-      "icons": [
-        {
-          "src": "/icon-192x192.png?v=2",
-          "sizes": "192x192"
-        }
-      ]
-    }
-  ],
-  "screenshots": [
-    {
-      "src": "/og-image.jpg",
-      "sizes": "1200x630",
-      "type": "image/jpeg",
-      "form_factor": "wide",
-      "label": "Birthday Bloom Celebration Preview"
+      "name": "Create anniversary website",
+      "short_name": "Create",
+      "url": "/create"
     }
   ]
 }

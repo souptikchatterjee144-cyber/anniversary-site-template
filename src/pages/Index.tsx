@@ -26,7 +26,7 @@ export type AnniversaryPhase =
   | "letter"
   | "goodbye";
 
-import { RELATIONSHIP_CONFIG } from "@/config/relationshipConfig";
+import { RELATIONSHIP_CONFIG, PERSONALIZED } from "@/config/relationshipConfig";
 
 // Developer / QA Test Mode helper: allows preview of all sections via ?devkey=SECRET_KEY
 const checkQaMode = (): boolean => {
@@ -58,7 +58,7 @@ const Index = () => {
 
   useEffect(() => {
     if (typeof document !== "undefined") {
-      document.title = RELATIONSHIP_CONFIG.SITE_TITLE || "Our Anniversary | A Little Something Special 💖";
+      document.title = PERSONALIZED ? (RELATIONSHIP_CONFIG.SITE_TITLE || "Our Anniversary") : "Celebration by Souptik | Free Anniversary Website Maker";
     }
   }, []);
 
@@ -92,6 +92,8 @@ const Index = () => {
       <div className="fixed top-[5%] left-[8%] w-[38rem] h-[38rem] rounded-full bg-[radial-gradient(circle,rgba(242,65,126,0.18)_0%,transparent_70%)] blur-[120px] pointer-events-none animate-subtle-float" />
       <div className="fixed top-[20%] right-[8%] w-[34rem] h-[34rem] rounded-full bg-[radial-gradient(circle,rgba(255,210,51,0.12)_0%,transparent_70%)] blur-[130px] pointer-events-none animate-pulse" />
       <div className="fixed bottom-[10%] left-[25%] w-[42rem] h-[42rem] rounded-full bg-[radial-gradient(circle,rgba(142,73,206,0.16)_0%,transparent_70%)] blur-[140px] pointer-events-none" />
+
+      {!PERSONALIZED && <header className="fixed top-3 left-3 z-[60] max-w-[75vw] rounded-xl bg-black/40 px-3 py-2 text-xs text-pink-100 backdrop-blur-md"><p className="font-semibold">Celebration by Souptik</p><a href="/create" className="underline text-pink-200">Free anniversary website maker</a></header>}
 
       {/* Floating Audio Mute / Unmute Button */}
       <button

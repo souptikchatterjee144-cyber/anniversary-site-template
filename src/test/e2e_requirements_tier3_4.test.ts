@@ -993,9 +993,6 @@ describe("Tier 4: Real-World Celebration Workload Scenarios", () => {
     // OpenGraph & Twitter
     expect(html).toContain('property="og:title"');
     expect(html).toContain('property="og:description"');
-    expect(html).toContain('property="og:locale:alternate" content="hi_IN"');
-    expect(html).toContain('property="og:locale:alternate" content="bn_BD"');
-    expect(html).toContain('property="og:locale:alternate" content="fr_FR"');
     expect(html).toContain('name="twitter:card" content="summary_large_image"');
 
     // JSON-LD Structured Data
@@ -1008,7 +1005,7 @@ describe("Tier 4: Real-World Celebration Workload Scenarios", () => {
     // 2. Validate site.webmanifest theme synchronization
     expect(fs.existsSync(manifestPath)).toBe(true);
     const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf-8"));
-    expect(manifest.name).toBe("Birthday Bloom");
+    expect(manifest.name).toBe("Celebration by Souptik");
     expect(manifest.theme_color).toBe("#1a0515");
     expect(manifest.background_color).toBe("#1a0515");
 
