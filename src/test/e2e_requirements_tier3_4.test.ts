@@ -987,7 +987,7 @@ describe("Tier 4: Real-World Celebration Workload Scenarios", () => {
     const html = fs.readFileSync(indexPath, "utf-8");
 
     // Canonical & Viewport
-    expect(html).toContain('<link rel="canonical" href="https://anniversary-website-generator.vercel.app/" />');
+    expect(html).toContain('<link rel="canonical" href="https://celebration-by-souptik.vercel.app/" />');
     expect(html).toContain('name="viewport" content="width=device-width, initial-scale=1.0"');
 
     // OpenGraph & Twitter

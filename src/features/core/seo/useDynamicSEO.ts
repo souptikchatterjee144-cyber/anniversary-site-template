@@ -121,7 +121,7 @@ export const useDynamicSEO = (config: BirthdayConfig) => {
     setMetaTag('meta[property="og:description"]', 'property', 'og:description', description);
     setMetaTag('meta[property="og:locale"]', 'property', 'og:locale', locale);
 
-    const currentUrl = typeof window !== 'undefined' ? window.location.href : 'https://anniversary-website-generator.vercel.app/';
+    const currentUrl = typeof window !== 'undefined' ? window.location.href : 'https://celebration-by-souptik.vercel.app/';
     setMetaTag('meta[property="og:url"]', 'property', 'og:url', currentUrl);
     setCanonicalLink(currentUrl.split('#')[0]);
 
@@ -145,7 +145,7 @@ export const useDynamicSEO = (config: BirthdayConfig) => {
         '@type': 'VirtualLocation',
         url: currentUrl,
       },
-      image: 'https://anniversary-website-generator.vercel.app/og-image.jpg',
+      image: 'https://celebration-by-souptik.vercel.app/og-image.jpg',
       organizer: {
         '@type': 'Person',
         name: sender || 'Someone Special',
