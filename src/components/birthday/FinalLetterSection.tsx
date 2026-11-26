@@ -226,9 +226,9 @@ export const FinalLetterSection = ({ onComplete }: FinalLetterSectionProps) => {
                     drag="y"
                     dragConstraints={{ top: -90, bottom: 0 }}
                     dragElastic={0.1}
-                    style={{ y: sealDragY }}
+                    style={{ y: sealDragY, touchAction: "none" }}
                     onDragEnd={handleSealDragEnd}
-                    className="absolute bottom-1 left-1/2 -translate-x-1/2 z-40 w-14 h-14 rounded-full bg-gradient-to-tr from-rose-700 via-rose-500 to-amber-500 shadow-[0_4px_16px_rgba(242,65,126,0.7)] border-2 border-amber-200 flex items-center justify-center cursor-grab active:cursor-grabbing"
+                    className="absolute bottom-1 left-1/2 -ml-7 z-40 w-14 h-14 rounded-full bg-gradient-to-tr from-rose-700 via-rose-500 to-amber-500 shadow-[0_4px_16px_rgba(242,65,126,0.7)] border-2 border-amber-200 flex items-center justify-center cursor-grab active:cursor-grabbing"
                   >
                     <Heart className="w-7 h-7 text-amber-100 fill-amber-100/95" />
                   </motion.div>

@@ -50,7 +50,7 @@ export interface RelationshipConfig {
   GOODBYE_MESSAGE: string;
 }
 
-export const RELATIONSHIP_CONFIG: RelationshipConfig = {
+export const DEMO_CONFIG: RelationshipConfig = {
   /**
    * Browser tab title and OpenGraph site name.
    */
@@ -60,7 +60,7 @@ export const RELATIONSHIP_CONFIG: RelationshipConfig = {
    * Hero and feature photos
    */
   PHOTOS: {
-    hero: "/photos/hero.jpg",
+    hero: "/photos/hero.svg",
   },
 
   /**
@@ -90,7 +90,7 @@ export const RELATIONSHIP_CONFIG: RelationshipConfig = {
    * To preview the site before REVEAL_AT, append `?devkey=YOUR_KEY` to the URL.
    * Change this string to your own secret, or set to "" to completely disable preview bypass.
    */
-  DEV_BYPASS_KEY: "anniversary-preview-secret",
+  DEV_BYPASS_KEY: "",
 
   /**
    * Target reveal date & time for the countdown lock screen (when TIMER_MODE === "real").
@@ -139,32 +139,33 @@ export const RELATIONSHIP_CONFIG: RelationshipConfig = {
 
   PUZZLE_PHOTOS: [
     {
-      src: "/photos/puzzle-1.jpg",
+      src: "/photos/puzzle-1.svg",
       loveLine: "Every time I look at you, I fall a little more.",
     },
     {
-      src: "/photos/puzzle-2.jpg",
+      src: "/photos/puzzle-2.svg",
       loveLine: "Us, on our best days — and every day feels like one.",
     },
     {
-      src: "/photos/puzzle-3.jpg",
+      src: "/photos/puzzle-3.svg",
       loveLine: "Two people, one story. Still writing it.",
     },
   ],
 
   SCRATCH_PHOTO: {
-    src: "/photos/scratch-reveal.jpg",
+    src: "/photos/scratch-reveal.svg",
     loveLine: "Some moments don't need words. This one just needs us.",
   },
 
   FINAL_GALLERY: {
     photos: [
-      "/photos/gallery-1.jpg",
-      "/photos/gallery-2.jpg",
-      "/photos/gallery-3.jpg",
-      "/photos/gallery-4.jpg",
-      "/photos/gallery-5.jpg",
-      "/photos/gallery-6.jpg",
+      "/photos/gallery-1.svg",
+      "/photos/gallery-2.svg",
+      "/photos/gallery-3.svg",
+      "/photos/gallery-4.svg",
+      "/photos/gallery-5.svg",
+      "/photos/gallery-6.svg",
+      "/photos/gallery-7.svg",
     ],
     captions: [
       "Every date with you feels like the first one.",
@@ -173,6 +174,7 @@ export const RELATIONSHIP_CONFIG: RelationshipConfig = {
       "You make every ordinary moment feel unforgettable.",
       "Matching outfits, matching hearts.",
       "Even in a crowd, I only ever see you.",
+      "A little memory to keep forever.",
     ],
     loveLines: [
       "Every date with you feels like the first one.",
@@ -181,20 +183,25 @@ export const RELATIONSHIP_CONFIG: RelationshipConfig = {
       "You make every ordinary moment feel unforgettable.",
       "Matching outfits, matching hearts.",
       "Even in a crowd, I only ever see you.",
+      "A little memory to keep forever.",
     ],
   },
 
   FINAL_LETTER: {
     paragraphs: [
-      "My dearest [PARTNER_NAME],",
+      "My dearest Mia,",
       "By the time you're reading this, you've clicked through a lot of silly buttons, dodged a runaway 'No', and solved a few puzzles just to get here. I hope every second of it made you smile, because that's really all I wanted.",
       "I'm not good at saying big things out loud, so I put them here instead. You make ordinary days feel worth remembering. You make the hard days easier just by being in them. And somehow, the more time passes, the more sure I am that I want you in all of mine.",
       "This isn't a grand gesture. It's just a small website built with a lot of love, for someone who deserves a lot more than that. Thank you for choosing to stay, for laughing at my terrible jokes, and for being exactly who you are.",
       "Here's to us, and to every day still ahead.",
       "Forever yours,",
-      "[YOUR_NAME] 💖",
+      "Alex 💖",
     ],
   },
 
   GOODBYE_MESSAGE: "That's it for now. But this? Us? Still going. 💛",
 };
+
+export const PERSONALIZED = Boolean((window as any).__ANNIVERSARY_CONFIG__) || new URLSearchParams(window.location.search).get("preview") === "1";
+const raw = (window as any).__ANNIVERSARY_CONFIG__ || (PERSONALIZED ? JSON.parse(sessionStorage.getItem("anniversary-preview") || "null") : null);
+export const RELATIONSHIP_CONFIG: RelationshipConfig = raw ? {...DEMO_CONFIG,...raw,REVEAL_AT:new Date(raw.REVEAL_AT)} : DEMO_CONFIG;

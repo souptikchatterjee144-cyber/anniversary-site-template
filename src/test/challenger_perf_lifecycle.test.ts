@@ -543,7 +543,7 @@ describe("Adversarial Stress Test: Performance, Physics & Lifecycle Safety", () 
       expect(fs.existsSync(sitemapPath)).toBe(true);
       const sitemapContent = fs.readFileSync(sitemapPath, "utf-8");
       expect(sitemapContent).toContain("<urlset");
-      expect(sitemapContent).toContain("https://birthday-bloom.vercel.app/");
+      expect(sitemapContent).toContain("https://anniversary-website-generator.vercel.app/");
 
       // 4. llms.txt
       const llmsPath = path.join(distDir, "llms.txt");

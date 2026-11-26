@@ -864,7 +864,7 @@ describe("Tier 1: Feature Coverage (Opaque-Box Requirement Verification)", () =>
     it("12.1: index.html contains canonical URL link", () => {
       const indexPath = path.join(rootDir, "index.html");
       const html = fs.readFileSync(indexPath, "utf-8");
-      expect(html).toContain('<link rel="canonical" href="https://birthday-bloom.vercel.app/" />');
+      expect(html).toContain('<link rel="canonical" href="https://anniversary-website-generator.vercel.app/" />');
     });
 
     it("12.2: index.html contains complete OpenGraph tags (title, description, image, url)", () => {
@@ -874,7 +874,7 @@ describe("Tier 1: Feature Coverage (Opaque-Box Requirement Verification)", () =>
       expect(html).toContain('property="og:description"');
       expect(html).toContain('property="og:type" content="website"');
       expect(html).toContain('property="og:image"');
-      expect(html).toContain('property="og:url" content="https://birthday-bloom.vercel.app/"');
+      expect(html).toContain('property="og:url" content="https://anniversary-website-generator.vercel.app/"');
     });
 
     it("12.3: index.html contains alternate locale tags for hi_IN, bn_BD, and fr_FR", () => {

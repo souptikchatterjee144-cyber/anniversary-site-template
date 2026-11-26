@@ -110,7 +110,7 @@ describe("SEO, UX, and PWA Enhancements Test Suite", () => {
     const htmlContent = fs.readFileSync(indexPath, "utf-8");
 
     it("contains canonical link tag", () => {
-      expect(htmlContent).toContain('<link rel="canonical" href="https://birthday-bloom.vercel.app/" />');
+      expect(htmlContent).toContain('<link rel="canonical" href="https://anniversary-website-generator.vercel.app/" />');
     });
 
     it("contains OpenGraph locale and alternate language tags", () => {
@@ -136,7 +136,7 @@ describe("SEO, UX, and PWA Enhancements Test Suite", () => {
 
       const webSite = parsed["@graph"].find((item: { "@type": string }) => item["@type"] === "WebSite");
       expect(webSite).toBeDefined();
-      expect(webSite.url).toBe("https://birthday-bloom.vercel.app/");
+      expect(webSite.url).toBe("https://anniversary-website-generator.vercel.app/");
       expect(webSite.inLanguage).toContain("en");
       expect(webSite.inLanguage).toContain("bn");
       expect(webSite.inLanguage).toContain("hi");
@@ -195,7 +195,7 @@ describe("SEO, UX, and PWA Enhancements Test Suite", () => {
       expect(robotsContent).toContain("User-agent: GPTBot");
       expect(robotsContent).toContain("User-agent: ClaudeBot");
       expect(robotsContent).toContain("User-agent: PerplexityBot");
-      expect(robotsContent).toContain("Sitemap: https://birthday-bloom.vercel.app/sitemap.xml");
+      expect(robotsContent).toContain("Sitemap: https://anniversary-website-generator.vercel.app/sitemap.xml");
     });
 
     const sitemapPath = path.resolve(process.cwd(), "public/sitemap.xml");

@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { RELATIONSHIP_CONFIG } from "@/config/relationshipConfig";
+import { RELATIONSHIP_CONFIG, PERSONALIZED } from "@/config/relationshipConfig";
 import { Heart, Sparkles, Stars } from "lucide-react";
 
 export const GoodbyeScreen = () => {
@@ -66,6 +66,7 @@ export const GoodbyeScreen = () => {
           <span style={{ fontFamily: "'Quicksand', sans-serif" }}>Happy Anniversary, My Love</span>
           <Stars className="w-4 h-4 text-amber-300" />
         </div>
+        {!PERSONALIZED && <div className="mt-7 space-y-3"><a href="/create" className="inline-block rounded-full bg-gradient-to-r from-pink-500 to-purple-600 px-6 py-3 font-bold text-white shadow-lg">Create Your Own Website</a><p className="text-xs text-pink-200/80">Anniversary adaptation by Souptik Chatterjee</p></div>}
       </motion.div>
     </div>
   );

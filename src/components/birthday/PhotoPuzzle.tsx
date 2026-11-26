@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { TypeWriter } from "./TypeWriter";
 import { Sparkles, ArrowRight, Wand2, Heart } from "lucide-react";
@@ -37,6 +37,7 @@ function generateSolvableGrid(): number[] {
   }
 
   // Append empty tile (8) at the end
+  if(tiles.every((tile,i)=>tile===i)) [tiles[0],tiles[1],tiles[2]]=[tiles[1],tiles[2],tiles[0]];
   return [...tiles, 8];
 }
 
@@ -49,6 +50,8 @@ function isSolved(grid: number[]): boolean {
 
 export const PhotoPuzzle = ({ imageSrc, loveLine, onComplete }: PhotoPuzzleProps) => {
   const [grid, setGrid] = useState<number[]>(() => generateSolvableGrid());
+  const [selected,setSelected]=useState<number|null>(null);
+  const pointer=useRef<{index:number;x:number;y:number}|null>(null);
   const [solved, setSolved] = useState(false);
   const [isGlowing, setIsGlowing] = useState(false);
   const [showCaption, setShowCaption] = useState(false);
@@ -85,27 +88,22 @@ export const PhotoPuzzle = ({ imageSrc, loveLine, onComplete }: PhotoPuzzleProps
     }
   }, [triggerVictory]);
 
-  const handleTileClick = (index: number) => {
-    if (solved) return;
-
-    const emptyIndex = grid.indexOf(8);
-    const row = Math.floor(index / 3);
-    const col = index % 3;
-    const emptyRow = Math.floor(emptyIndex / 3);
-    const emptyCol = emptyIndex % 3;
-
-    // Check if adjacent (manhattan distance = 1)
-    const isAdjacent = Math.abs(row - emptyRow) + Math.abs(col - emptyCol) === 1;
-
-    if (isAdjacent) {
-      soundEffects.playClick();
-      const newGrid = [...grid];
-      [newGrid[index], newGrid[emptyIndex]] = [newGrid[emptyIndex], newGrid[index]];
-      setGrid(newGrid);
-      checkVictory(newGrid);
-    }
+  const moveTile = (from:number,to:number) => {
+    if(solved || from===to || grid[from]===8 || to<0 || to>8)return;
+    const next=[...grid];
+    const [tile]=next.splice(from,1);
+    next.splice(to,0,tile);
+    setGrid(next);
+    setSelected(null);
+    soundEffects.playClick();
+    checkVictory(next);
   };
-
+  const handleTileClick = (index:number) => {
+    if(solved)return;
+    if(selected===index){setSelected(null);return;}
+    if(selected!==null){moveTile(selected,index);return;}
+    if(grid[index]!==8)setSelected(index);
+  };
   const handleAutoSolve = () => {
     soundEffects.playClick();
     const solvedGrid = [0, 1, 2, 3, 4, 5, 6, 7, 8];
@@ -166,12 +164,20 @@ export const PhotoPuzzle = ({ imageSrc, loveLine, onComplete }: PhotoPuzzleProps
             return (
               <div
                 key={`tile-${currentIndex}`}
-                onClick={() => handleTileClick(currentIndex)}
-                className={`relative aspect-square overflow-hidden touch-manipulation select-none ${
+                data-puzzle-index={currentIndex}
+                role="button"
+                tabIndex={solved?-1:0}
+                aria-label={isBlank?"Empty slot":("Puzzle piece "+(tileValue+1))}
+                aria-pressed={selected===currentIndex}
+                onKeyDown={e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();handleTileClick(currentIndex);}}}
+                onPointerDown={e=>{if(solved||isBlank||e.button!==0)return;pointer.current={index:currentIndex,x:e.clientX,y:e.clientY};e.currentTarget.setPointerCapture(e.pointerId);}}
+                onPointerCancel={()=>{pointer.current=null;}}
+                onPointerUp={e=>{const p=pointer.current;pointer.current=null;if(!p){handleTileClick(currentIndex);return;}if(Math.hypot(e.clientX-p.x,e.clientY-p.y)>8){const cell=document.elementFromPoint(e.clientX,e.clientY)?.closest("[data-puzzle-index]");if(cell){const to=Number(cell.getAttribute("data-puzzle-index"));if(Number.isInteger(to))moveTile(p.index,to);}return;}handleTileClick(currentIndex);}}
+                className={`relative aspect-square overflow-hidden touch-none select-none ${
                   isBlank
                     ? "bg-black/30 border border-dashed border-pink-400/20 rounded-lg"
-                    : "cursor-pointer rounded-lg hover:brightness-110 shadow-sm active:scale-95 transition-transform"
-                } ${solved ? "rounded-none" : ""}`}
+                    : "cursor-grab rounded-lg hover:brightness-110 shadow-sm active:cursor-grabbing"
+                } ${solved ? "rounded-none" : ""} ${selected===currentIndex ? "ring-2 ring-inset ring-amber-300 brightness-110" : ""}`}
                 style={
                   !isBlank
                     ? imageLoaded
@@ -203,7 +209,7 @@ export const PhotoPuzzle = ({ imageSrc, loveLine, onComplete }: PhotoPuzzleProps
               className="text-xs text-pink-300/60 font-sans tracking-wide"
               style={{ fontFamily: "'Quicksand', sans-serif" }}
             >
-              Tap adjacent tiles to solve
+              Select a tile, then tap any slot, or drag and drop
             </span>
             <button
               onClick={handleAutoSolve}

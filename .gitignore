@@ -2,3 +2,8 @@
 dist/
 .env
 *.local
+
+.vercel/
+public/export-package/
+apply-demo.cjs
+fix-interactions.cjs
